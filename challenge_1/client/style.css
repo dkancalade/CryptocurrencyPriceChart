@@ -1,7 +1,41 @@
 body {
   background-color: green;
 }
-#app {
-  background-color: blue;
 
+#search-container {
+
+  display: flex;
+  flex-direction: column;
+  align-items: left;
 }
+
+#date-container {
+  padding: 2px;
+}
+
+#keyword-container {
+/* margin: 2px; */
+padding: 2px;
+}
+
+#date-container button {
+margin-left: 2px;
+}
+
+#date-container select {
+  margin: 2px;
+  }
+
+#keyword-container input {
+  margin-left: 8px;
+  }
+
+#keyword-container button {
+margin-left: 4px;
+}
+
+
+
+
+
+
