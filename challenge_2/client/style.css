@@ -1,3 +1,16 @@
 body {
-  background-color: olive;
+  background-color: wheat;
+}
+#date-range {
+  display: flex;
+  flex-direction: column;
+}
+
+#date-range label {
+  font-size: 16px;
+  font-family: Arial, Helvetica, sans-serif;
+}
+#citation a {
+  font-size: 8px;
+  font-family: Arial, Helvetica, sans-serif;
 }
