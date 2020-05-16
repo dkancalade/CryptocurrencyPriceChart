@@ -1,28 +1,26 @@
 import React, {Component, Fragment} from 'react';
 import Search from './search.jsx';
 import Results from './results.jsx';
-import ReactPaginate from 'react-paginate';
 import Axios from 'axios';
 
 class App extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      results: false,
       year: '',
       era: '',
       keyword: '',
-
-      offset: 0,
-      data: [],
+      offset: 1,
+      data: false,
       perPage: 10,
-      currentPage: 0
+      currentSearchType: ''
     };
     this.handleChange=this.handleChange.bind(this);
     this.handleEraChange=this.handleEraChange.bind(this);
     this.handleYearChange=this.handleYearChange.bind(this);
     this.handleSearch=this.handleSearch.bind(this);
     this.handleKeywordChange=this.handleKeywordChange.bind(this);
+    this.handlePageChange=this.handlePageChange.bind(this);
   }
 
   handleChange(targetId, value) {
@@ -30,19 +28,17 @@ class App extends Component {
     newState[`${targetId}`] = value;
 
     this.setState(newState, () => {
-      console.log('updated state', this.state);
+      // console.log('updated state', this.state);
     });
   }
 
   handleEraChange(target) {
-
     this.handleChange(target.id, target.value);
   }
 
   handleYearChange(target) {
     if (Number.parseInt(target.value) !== NaN) {
-
-    this.handleChange(target.id, target.value);
+      this.handleChange(target.id, target.value);
     }
   }
 
@@ -50,30 +46,39 @@ class App extends Component {
       this.handleChange(target.id, target.value);
   }
 
-  handleSearch(target) {
-    console.log('clicked', target);
+  handleSearch(target, id) {
+    var container;
+    var page = this.state.offset;
+    if (target === null) {
+      container = id;
+    } else {
+      container = target.parentElement.id
+      this.setState({offset: 1});
+      page = 1;
+    }
+    const limit = this.state.perPage;
     var parameter;
     var url;
 
-    if (target.parentElement.id === 'date-container') {
+    if (container === 'date-container') {
+      this.setState({currentSearchType: 'date'});
       if (this.state.era === 'BC') {
         parameter = `-${this.state.year}`;
       } else {
         parameter = this.state.year;
       }
-      console.log('parameter', parameter);
-      url = `http://localhost:3000/events?date_like=${parameter}`;
+      url = `http://localhost:3000/events?date_like=${parameter}&_limit=${limit}&_page=${page}`;
     }
 
-    if (target.parentElement.id === 'keyword-container') {
+    if (container === 'keyword-container') {
+      this.setState({currentSearchType: 'keyword'});
       parameter = this.state.keyword;
-      url = `http://localhost:3000/events?q=${parameter}`;
-
+      console.log('keyword page', page);
+      url = `http://localhost:3000/events?q=${parameter}&_limit=${limit}&_page=${page}`;
     }
-
     Axios.get(url)
       .then((response) => {
-      this.setState({data: response}, () => {
+      this.setState({data: response.data}, () => {
         console.log('results', this.state.data);
       });
       })
@@ -82,6 +87,18 @@ class App extends Component {
       });
   };
 
+  handlePageChange(value) {
+    var parentElementId;
+    this.setState({offset: value.selected + 1}, () => {
+      if (this.state.currentSearchType === 'date') {
+        parentElementId = 'date-container';
+      }
+      if (this.state.currentSearchType === 'keyword') {
+        parentElementId = 'keyword-container';
+      }
+        this.handleSearch(null, parentElementId);
+    });
+  }
 
   render() {
     return (
@@ -94,9 +111,10 @@ class App extends Component {
             handleSearch={this.handleSearch}
           />
         </div>
-        {this.state.results ? <div id='results-container'><Results /></div>: null}
+        <div id='results-container'>
+        {this.state.data ? <Results data={this.state.data} handlePageChange={this.handlePageChange} />: null}
+        </div>
       </Fragment>
-
     );
   }
 }
