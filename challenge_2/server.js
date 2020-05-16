@@ -15,7 +15,8 @@ app.use(cors());
 app.get('/historicalData', (req, res) => {
   const start = req.query.start;
   const end = req.query.end;
-  const url = `https://api.coindesk.com/v1/bpi/historical/close.json?start=${start}&end=${end}`;
+  const curr = req.query.curr;
+  const url = `https://api.coindesk.com/v1/bpi/historical/close/${curr}.json/?start=${start}&end=${end}`;
   axios.get(url)
     .then((data) => {
       res.send(data.data.bpi).status(201).end();

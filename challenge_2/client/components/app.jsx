@@ -16,7 +16,7 @@ class App extends Component {
       dataIds: 0,
       dataValues: 0,
       cryptoName: 'Bitcoin',
-      currencyType: '$'
+      currencyType: 'USD'
     };
     this.selectCurrency = this.selectCurrency.bind(this);
     this.selectCrypto = this.selectCrypto.bind(this);
@@ -102,7 +102,7 @@ class App extends Component {
     if (validStartDate && validEndDate) {
       const startDate = this.dateFormatter(this.state.startDate);
       const endDate = this.dateFormatter(this.state.endDate);
-      const url = `http://localhost:4400/historicalData?start=${startDate}&end=${endDate}`;
+      const url = `http://localhost:4400/historicalData?start=${startDate}&end=${endDate}&curr=${this.state.currencyType}`;
       Axios.get(url)
         .then((data) => {
           const results = data.data;
@@ -112,7 +112,6 @@ class App extends Component {
           });
           const labels = this.createDateLabels(keys);
           this.setState({dataIds: labels, dataValues: values}, () => {
-           console.log(this.state);
             const chart = new Chart(document.getElementById('crypto-chart').getContext('2d'), {
               type: 'line',
               data: {

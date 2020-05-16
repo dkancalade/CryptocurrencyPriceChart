@@ -20,9 +20,9 @@ const RequestChart = ({selectCurrency, selectCrypto, handleDateChange, handleCli
     </div>
     <div id='currency'>
       <select onChange={(e) => { selectCurrency(e.target.value) }} >
-        <option>$</option>
-        <option>&euro;</option>
-        <option>&pound;</option>
+        <option>USD</option>
+        {/* <option>EUR</option>
+        <option>GBP</option> */}
       </select>
     </div>
     <div id='submit-data'>
