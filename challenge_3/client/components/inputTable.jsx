@@ -1,6 +1,6 @@
 import React, {Fragment} from 'react';
 
-const inputTable = (props) => {
+const inputTable = ({handleClick}) => {
   return (
    <table>
      <caption><h5>Select the Number of Pins Then Click Ok</h5></caption>
@@ -11,7 +11,7 @@ const inputTable = (props) => {
           <th>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</th>
         </tr>
       </thead>
-     <tbody>
+     <tbody onClick={(e) => {handleClick(e.target)}}>
       <tr>
         <td>0</td>
         <td>1</td>
