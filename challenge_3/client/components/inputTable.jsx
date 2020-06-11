@@ -1,9 +1,10 @@
 import React, {Fragment} from 'react';
 
-const inputTable = ({handleClick}) => {
+const inputTable = ({remainingPins, handleClick}) => {
+
   return (
    <table>
-     <caption><h5>Select the Number of Pins Then Click Ok</h5></caption>
+     <caption><h5>Select the Number of Pins, When Finished Click Restart</h5></caption>
       <thead>
         <tr>
           <th>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</th>
@@ -11,7 +12,7 @@ const inputTable = ({handleClick}) => {
           <th>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</th>
         </tr>
       </thead>
-     <tbody onClick={(e) => {handleClick(e.target)}}>
+     <tbody onClick={(e) => { handleClick(e.target)}}>
       <tr>
         <td>0</td>
         <td>1</td>
@@ -30,7 +31,7 @@ const inputTable = ({handleClick}) => {
       <tr>
         <td>9</td>
         <td>10</td>
-        <td>OK</td>
+        <td>Restart</td>
       </tr>
      </tbody>
    </table>

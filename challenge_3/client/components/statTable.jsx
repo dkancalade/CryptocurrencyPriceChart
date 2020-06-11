@@ -2,11 +2,12 @@ import React, {Fragment} from 'react';
 import Stats from './stats.jsx'
 import ScoreBoard from './scoreBoard.jsx';
 
-const StatTable = (props) => {
+const StatTable = ({currentFrame, scoreboard}) => {
+
   return (
     <Fragment>
-      <Stats/>
-      <ScoreBoard/>
+      <Stats currentFrame={currentFrame}/>
+      <ScoreBoard scoreboard={scoreboard}/>
     </Fragment>
   );
 };

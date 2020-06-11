@@ -1,6 +1,6 @@
 import React, {Fragment} from 'react';
 
-const Stats = (props) => {
+const Stats = ({currentFrame}) => {
   return (
     <table id='stats' >
       <thead>
@@ -14,7 +14,7 @@ const Stats = (props) => {
           <td>Total Score</td>
         </tr>
         <tr id='currentStats'>
-          <td id='frame'>1</td>
+          <td id='frame'>{currentFrame.number}</td>
           <td id='score'>0</td>
         </tr>
       </tbody>
