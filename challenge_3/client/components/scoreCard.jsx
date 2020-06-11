@@ -74,26 +74,39 @@ class ScoreCard extends Component {
   calculateScore(frame) {
     let currentBoard = [...this.state.scoreboard];
     let newBoard = currentBoard.map((round, i, oldBoard) => {
-      console.log('round', round, i);
-      if (round[2] === '-' || oldBoard[i + 1][1][0] === '-') {
-        console.log('round', round);
+      if (round[2] === '-' || (i + 1 < oldBoard.length && oldBoard[i + 1][1][0] === '-')) {
         const firstBall = round[1][0];
         const secondBall = round[1][1];
         const thirdBall = round[1][2];
         if (firstBall !== 10) {
           //firstball only
           if (secondBall === '-') {
-            round[2] = firstBall;
-            return round;
+            if (i - 1 >= 0) {
+              const previousScore = oldBoard[i-1][2];
+              round[2] = [firstBall + previousScore];
+            } else {
+              round[2] = firstBall;
+              return round;
+            }
           }
           // first and second ball
-          if (secondBall < 10) {
-            round[2] = firstBall + secondBall;
-            return round;
+          if (i - 1 >= 0) {
+            const previousScore = oldBoard[i-1][2];
+            if (secondBall + firstBall < 10) {
+              round[2] = firstBall + secondBall + previousScore;
+              return round;
+            }
+          } else {
+            if (secondBall + firstBall < 10) {
+              round[2] = firstBall + secondBall;
+              return round;
+            }
           }
         }
       }
+      return round;
     });
+    console.log('newBoard', newBoard);
     return newBoard;
   }
 
