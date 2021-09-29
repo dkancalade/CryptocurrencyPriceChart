@@ -21,7 +21,7 @@
     "@babel/preset-react": "^7.9.4",
     "babel-loader": "^8.1.0",
     "css-loader": "^3.5.3",
-    "i": "^0.3.6",
+    "i": "^0.3.7",
     "path": "^0.12.7",
     "react": "^16.13.1",
     "react-dom": "^16.13.1",
